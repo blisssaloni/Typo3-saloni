@@ -1,0 +1,49 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+
+<article itemscope="itemscope" itemtype="http://schema.org/Article">
+    <header>
+
+        <h1>{newsItem.title}</h1>
+
+        <f:if condition="{newsItem.subtitle}">
+            <h2>{newsItem.subtitle}</h2>
+        </f:if>
+
+        <f:if condition="{newsItem.istopnews}">
+            <f:if condition="{newsItem.featureImage}">
+                <f:image image="{newsItem.featureImage}" width="800" alt="{newsItem.title}" />
+            </f:if>
+        </f:if>
+
+        <f:if condition="{newsItem.descriptionNews}">
+            <div>{newsItem.descriptionNews -> f:format.html()}</div>
+        </f:if>
+    
+
+
+    <div class="news-content" itemprop="articleBody">
+        <f:format.html>{newsItem.bodytext}</f:format.html>
+    </div>
+
+    <f:if condition="{newsItem.relatedFiles}">
+        <div class="news-files">
+            <f:for each="{newsItem.relatedFiles}" as="file">
+                <a href="{file.originalResource.publicUrl}" target="_blank" download>
+                    <f:format.raw>{file.originalResource.name}</f:format.raw>
+                </a><br>
+            </f:for>
+        </div>
+    </f:if>
+
+</article>
+
+</f:section>
+
+
+
+
+
+
+
