@@ -1,0 +1,34 @@
+<f:layout name="Default" />
+
+<f:section name="content">
+
+
+    <f:for each="{news}" as="newsItem">
+
+
+        <article class="news-item" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+            <f:if condition="{newsItem.istopnews}">
+                <f:if condition="{newsItem.featureImage}">
+                    <f:image image="{newsItem.featureImage}" width="300" />
+                </f:if>
+            </f:if>
+
+
+            <f:if condition="{newsItem.subtitle}">
+                <h3 class="subtitle">{newsItem.subtitle}</h3>
+            </f:if>
+
+
+            <div class="news-details-link">
+
+                <f:link.action action="detail" controller="News" arguments="{news: newsItem.uid}"
+                    additionalAttributes="{itemprop: 'url'}">
+                    View Details
+                </f:link.action>
+            </div>
+
+        </article>
+    </f:for>
+
+</f:section>

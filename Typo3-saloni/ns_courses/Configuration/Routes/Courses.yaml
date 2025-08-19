@@ -1,0 +1,19 @@
+routeEnhancers:
+  NsCourses:
+    type: Extbase
+    extension: NsCourses
+    plugin: Course
+    routes:
+      - routePath: '/courses'
+        _controller: 'Course::list'
+      - routePath: '/course/{course_slug}'
+        _controller: 'Course::show'
+        _arguments:
+          course_slug: 'course'
+    defaultController: 'Course::list'
+    aspects:
+      course_slug:
+        type: PersistedAliasMapper
+        tableName: tx_nscourses_domain_model_course
+        routeFieldName: slug
+

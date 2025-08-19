@@ -1,0 +1,65 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  NITSAN\NsCourses\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
+
+  NITSAN\NsCourses\Event\EventListener:  
+    tags:
+      - name: event.listener
+        identifier: 'ns_faq/extension-activated'
+
+  
+  NITSAN\NsCourses\Event\CourseCreatedEventListener:
+    autowire: true
+    autoconfigure: true
+    public: true
+    
+
+  NITSAN\NsCourses\Event\StudentCreatedEmailListener:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+
+  NITSAN\NsCourses\Controller\StudentsController:
+    arguments:
+      $eventDispatcher: '@Psr\EventDispatcher\EventDispatcherInterface'
+      $studentsRepository: '@NITSAN\NsCourses\Domain\Repository\StudentsRepository'
+      $courseRepository: '@NITSAN\NsCourses\Domain\Repository\CourseRepository'
+      $persistenceManager: '@TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager'
+
+  NITSAN\NsCourses\Command\CleanupCommand:
+    tags:
+      - name: 'console.command'
+        command: 'nscourses:cleanup-old-records'
+        description: 'Delete old student records'
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  NITSAN\NsCourses\Task\CleanupOldStudentsTask:
+    tags:
+      - name: 'scheduler.task'
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  NITSAN\NsCourses\Task\CleanupOldStudentsTaskAdditionalFields:
+    tags:
+      - name: 'scheduler.additionalField'
+    autowire: true
+    autoconfigure: true
+    public: true
+
+
+  NITSAN\NsCourses\Controller\Backend\MyModuleController:
+    public: true
+    arguments:
+      $moduleTemplateFactory: '@TYPO3\CMS\Backend\Template\ModuleTemplateFactory'
+      $courseRepository: '@NITSAN\NsCourses\Domain\Repository\CourseRepository'
+        

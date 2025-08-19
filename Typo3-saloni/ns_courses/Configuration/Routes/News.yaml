@@ -1,0 +1,37 @@
+routeEnhancers:
+  # NsCourses:
+  #   type: Extbase
+  #   extension: NsCourses
+  #   plugin: Course
+  #   routes:
+  #     - routePath: '/courses'
+  #       _controller: 'Course::list'
+  #     - routePath: '/course/{course_slug}'
+  #       _controller: 'Course::show'
+  #       _arguments:
+  #         course_slug: 'course'
+  #   defaultController: 'Course::list'
+  #   aspects:
+  #     course_slug:
+  #       type: PersistedAliasMapper
+  #       tableName: tx_nscourses_domain_model_course
+  #       routeFieldName: slug
+
+
+  News:
+    type: Extbase
+    extension: News
+    plugin: Pi1
+    routes:
+      - routePath: '/detail/{news_title}'
+        _controller: 'News::detail'
+        _arguments:
+          news_title: news
+    defaultController: 'News::list'
+    aspects:
+      news_title:
+        type: PersistedAliasMapper
+        tableName: tx_news_domain_model_news
+        routeFieldName: path_segment
+
+
